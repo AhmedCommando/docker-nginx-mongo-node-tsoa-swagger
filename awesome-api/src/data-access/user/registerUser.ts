@@ -3,7 +3,12 @@ import * as crypto from 'crypto';
 
 import makeUser, { UserInterface } from '../../model/user/user';
 
-// tslint:disable-next-line: typedef
+/**
+ * vanilla js like factory function
+ * data access layer 
+ * register user
+ * @param connectDb 
+ */
 export default async function registerUser(connectDb: () => Promise<any>) {
     const db = await connectDb();
     return async function register(user: UserInterface): Promise<UserInterface> {

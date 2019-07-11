@@ -11,9 +11,14 @@ export default function makeUser(user: UserInterface, crypto: any): Readonly<Use
         validateName('last', lastName);
         validateEmail(email);
         validatePassword(password);
-        return {firstName, lastName, email, userName, password: cryptPassword(password)};
+        return {firstName, lastName, email, userName, password};
     }
 
+    /**
+     * validate first and last name
+     * @param label 
+     * @param name 
+     */
     function validateName(label: 'first' | 'last', name: string): void {
         if (name.length < 3 || hasNumber(name)) {
             throw new TypeError(
@@ -22,36 +27,55 @@ export default function makeUser(user: UserInterface, crypto: any): Readonly<Use
         }
     }
 
+    /**
+     * validate email
+     * @param email 
+     */
     function validateEmail (email: string): void {
         if (!isValidEmail(email)) {
             throw new TypeError('Invalid user email address.');
         }
     }
 
+    /**
+     * validate password
+     * @param password 
+     */
     function validatePassword(password: string): void {
         if (!password || password.length < 6) {
             throw new Error('Invalid password. should have at least 6 characters');
         }
     }
 
+    /**
+     * normalize user
+     * @param user 
+     */
     function normalize (user: UserInterface): UserInterface {
         return {
             firstName: upperFirst(user.firstName),
             lastName: upperFirst(user.lastName),
             email: user.email.toLowerCase(),
             userName: user.userName,
-            password: user.password
+            password: cryptPassword(user.password)
         };
     }
 
+    /**
+     * crypt password with nodejs crypto library
+     * @todo change this and move it from here, maybe use bcrypt
+     * @param password 
+     */
     function cryptPassword(password: string): string {
         const salt = crypto.randomBytes(16).toString('hex');
         return crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
     }
 }
 
+/**
+ * user interface
+ */
 export interface UserInterface {
-    _id?: string;
     firstName: string;
     lastName: string;
     email: string;
