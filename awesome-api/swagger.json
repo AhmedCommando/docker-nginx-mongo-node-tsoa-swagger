@@ -1,0 +1,189 @@
+{
+	"basePath": "/api/v1",
+	"consumes": [
+		"application/json"
+	],
+	"definitions": {
+		"HelloWorldInterface": {
+			"properties": {
+				"message": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"message"
+			],
+			"type": "object"
+		},
+		"HttpResponseInterface": {
+			"properties": {
+				"headers": {
+					"type": "object"
+				},
+				"statusCode": {
+					"type": "number",
+					"format": "double"
+				},
+				"data": {
+					"type": "object"
+				},
+				"error": {
+					"type": "string",
+					"x-nullable": true
+				}
+			},
+			"required": [
+				"headers",
+				"statusCode",
+				"data"
+			],
+			"type": "object"
+		},
+		"UserInterface": {
+			"properties": {
+				"firstName": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"userName": {
+					"type": "string"
+				},
+				"password": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"firstName",
+				"lastName",
+				"email",
+				"userName",
+				"password"
+			],
+			"type": "object"
+		}
+	},
+	"info": {
+		"title": "node-typescript-webpack-boilerplate",
+		"version": "1.0.0",
+		"description": "a boilerplate using node with typescript and webpack",
+		"license": {
+			"name": "MIT"
+		}
+	},
+	"paths": {
+		"/HelloWorld": {
+			"get": {
+				"operationId": "Hello",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/HelloWorldInterface"
+						}
+					}
+				},
+				"tags": [
+					"HelloWorldController"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/HelloWorld/{name}": {
+			"get": {
+				"operationId": "HelloName",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"$ref": "#/definitions/HelloWorldInterface"
+						}
+					}
+				},
+				"tags": [
+					"HelloWorldController"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "name",
+						"required": true,
+						"type": "string"
+					}
+				]
+			}
+		},
+		"/user": {
+			"get": {
+				"operationId": "Hello",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					}
+				},
+				"tags": [
+					"UserController"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "RegisterUser",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"schema": {
+							"type": "object"
+						}
+					},
+					"Unexpected error": {
+						"description": "",
+						"schema": {
+							"$ref": "#/definitions/HttpResponseInterface"
+						}
+					}
+				},
+				"tags": [
+					"UserController"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "user",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/UserInterface"
+						}
+					}
+				]
+			}
+		}
+	},
+	"produces": [
+		"application/json"
+	],
+	"swagger": "2.0",
+	"securityDefinitions": {}
+}
