@@ -1,4 +1,5 @@
 awesome-api/node_modules
 awesome-api/build
+awesome-api/yarn.lock
 data
 nginx-proxy/certs
